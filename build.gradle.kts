@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.example"
-version = "1.0-SNAPSHOT"
+version = "SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -40,7 +40,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "LastCount"
-            packageVersion = "1.0.0"
+            packageVersion = "1.1.0"
         }
     }
 }
