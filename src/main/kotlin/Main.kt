@@ -21,7 +21,7 @@ import kotlinx.datetime.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.nio.charset.StandardCharsets
+import java.io.PrintWriter
 import kotlin.io.path.*
 import java.nio.file.Path
 
@@ -64,11 +64,11 @@ private val configPath = directory.resolve("LastCount.json")
 private val icon = BitmapPainter(loadImageBitmap(Config::class.java.getResourceAsStream("assets/icon.png")!!))
 
 private fun writeConfig(config: Config) {
-    configPath.writeText(json.encodeToString(config), StandardCharsets.UTF_8)
+    configPath.writeText(json.encodeToString(config), Charsets.UTF_8)
 }
 
 @OptIn(ExperimentalTextApi::class)
-fun main() = application {
+fun app() = application {
     var hintA by remember { mutableStateOf("") }
     var hintB by remember { mutableStateOf("") }
 
@@ -85,7 +85,7 @@ fun main() = application {
                     configPath.createFile()
                     writeConfig(Config())
                 }
-                val config = json.decodeFromString<Config>(configPath.readText(StandardCharsets.UTF_8))
+                val config = json.decodeFromString<Config>(configPath.readText(Charsets.UTF_8))
                 timeA = config.timeA.toInstant(TimeZone.currentSystemDefault())
                 timeB = config.timeB.toInstant(TimeZone.currentSystemDefault())
                 hintA = config.hintA
@@ -344,4 +344,14 @@ fun main() = application {
             )
         }
     }
+}
+
+fun main() {
+    Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+        PrintWriter(directory.resolve("LastCount-Exception.txt").writer(Charsets.UTF_8)).let {
+            throwable.printStackTrace(it)
+            it.close()
+        }
+    }
+    app()
 }
