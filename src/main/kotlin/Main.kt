@@ -108,7 +108,7 @@ fun app() = application {
         icon = icon,
         state = rememberWindowState(
             position = WindowPosition(Alignment.Center),
-            size = DpSize(400.dp, 600.dp)
+            size = DpSize(400.dp, 610.dp)
         ),
         resizable = false,
     ) {
@@ -169,7 +169,7 @@ fun app() = application {
                 )
 
                 val timezone = TimeZone.currentSystemDefault()
-                val modifierTimePicker = modifier.height(135.dp)
+                val modifierTimePicker = modifier.height(140.dp)
                 if (initialized) {
                     Hint("截止时间A")
                     WheelDateTimePicker(
